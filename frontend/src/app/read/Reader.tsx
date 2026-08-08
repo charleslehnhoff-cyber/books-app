@@ -471,8 +471,8 @@ export default function Reader() {
 
   const fitToPage = () => {
     if (containerRef.current) {
-      const height = containerRef.current.clientHeight - 160;
-      const calculatedScale = Math.max(0.6, height / 800);
+      const height = (containerRef.current.clientHeight || window.innerHeight) - 80;
+      const calculatedScale = Math.max(0.7, height / 800);
       setPageWidth(undefined);
       setScale(calculatedScale);
     }
@@ -982,7 +982,7 @@ export default function Reader() {
         loading={<div style={{ padding: '4rem', textAlign: 'center', color: '#fff' }}>Loading PDF Document...</div>}
         error={<div style={{ padding: '4rem', textAlign: 'center', color: '#ef4444' }}>Failed to load PDF document.</div>}
       >
-        <div style={{ display: 'flex', flex: 1, overflow: 'hidden', paddingTop: '72px', paddingBottom: '72px', height: 'calc(100vh - 144px)' }}>
+        <div style={{ display: 'flex', flex: 1, overflow: 'hidden', paddingTop: '60px', paddingBottom: '20px', height: 'calc(100vh - 80px)' }}>
 
           {/* Thumbnails Sidebar */}
           {isPdf && !isEpub && showThumbnails && (

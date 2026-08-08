@@ -604,6 +604,7 @@ export default function Home() {
       onDragOver={handleGlobalDragOver}
       onDragLeave={handleGlobalDragLeave}
       onDrop={handleGlobalDrop}
+      style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden' }}
     >
       <style>{`
         .book-card-3d {
@@ -718,11 +719,114 @@ export default function Home() {
         </div>
       )}
 
-      {/* Mobile Sidebar Overlay */}
-      <div className={`mobile-overlay ${isSidebarOpen ? 'active' : ''}`} onClick={() => setIsSidebarOpen(false)} />
+      {/* 100% FULL-WIDTH UNCOLLAPSIBLE TOP NAVIGATION HEADER */}
+      <header className="header" style={{ width: '100%', minHeight: '64px', zIndex: 1000, flexShrink: 0, borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 1.5rem' }}>
+        <button 
+          className="btn btn-icon" 
+          onClick={() => setIsSidebarOpen(prev => !prev)}
+          style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', padding: '0.25rem' }}
+          title="Toggle Menu"
+        >
+          <Menu size={24} />
+        </button>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginRight: '0.5rem' }}>
+          <img 
+            src="/logo.png" 
+            alt="BOOKS Logo" 
+            style={{ width: '32px', height: '32px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 10px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
+          />
+          <span style={{ fontSize: '1.25rem', fontWeight: 700, background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
+            BOOKS
+          </span>
+        </div>
 
-      {/* Sidebar */}
-      <aside className={`sidebar ${isSidebarOpen ? 'open mobile-open' : 'collapsed'}`} style={{ zIndex: 1000 }}>
+        <div className="search-bar" style={{ flex: 1, maxWidth: '400px', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setIsSearchOpen(true)}>
+          <Search size={20} color="var(--text-secondary)" />
+          <div style={{ color: 'var(--text-secondary)', paddingLeft: '0.5rem', flex: 1 }}>Search...</div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', background: 'var(--bg-primary)', padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            <Command size={12} /> K
+          </div>
+        </div>
+        
+        <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-primary)', borderRadius: '0.5rem', border: '1px solid var(--border-color)', padding: '0 0.5rem' }}>
+            <Filter size={14} color="var(--text-secondary)" style={{ marginRight: '0.5rem' }} />
+            <select 
+              value={filterBy} 
+              onChange={(e) => setFilterBy(e.target.value as any)}
+              style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', padding: '0.5rem 0', fontSize: '0.9rem' }}
+            >
+              <option value="all">All Books</option>
+              <option value="unread">Unread</option>
+              <option value="inProgress">In Progress</option>
+              <option value="finished">Finished</option>
+            </select>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-primary)', borderRadius: '0.5rem', border: '1px solid var(--border-color)', padding: '0 0.5rem' }}>
+            <SortDesc size={14} color="var(--text-secondary)" style={{ marginRight: '0.5rem' }} />
+            <select 
+              value={sortBy} 
+              onChange={(e) => setSortBy(e.target.value as any)}
+              style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', padding: '0.5rem 0', fontSize: '0.9rem' }}
+            >
+              <option value="recent">Last Read</option>
+              <option value="added">Recently Added</option>
+              <option value="title">Title</option>
+              <option value="author">Author</option>
+            </select>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-primary)', padding: '0.25rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)' }}>
+            <button 
+              className={`btn btn-icon`}
+              style={{ backgroundColor: viewMode === 'shelf' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
+              onClick={() => setViewMode('shelf')}
+            >
+              <span title="3D Bookshelf View"><Library size={18} /></span>
+            </button>
+            <button 
+              className={`btn btn-icon`}
+              style={{ backgroundColor: viewMode === 'grid' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
+              onClick={() => setViewMode('grid')}
+            >
+              <span title="Grid View"><LayoutGrid size={18} /></span>
+            </button>
+            <button 
+              className={`btn btn-icon`}
+              style={{ backgroundColor: viewMode === 'list' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
+              onClick={() => setViewMode('list')}
+            >
+              <span title="List View"><List size={18} /></span>
+            </button>
+          </div>
+
+          <div style={{ width: '1px', height: '2rem', backgroundColor: 'var(--border-color)' }}></div>
+
+          <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme">
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <input 
+            type="file"
+            multiple
+            ref={fileInputRef} 
+            style={{ display: 'none' }} 
+            accept=".pdf,.epub" 
+            onChange={handleFileUpload} 
+          />
+          <button className="btn btn-premium-gradient hidden-mobile" onClick={() => setIsUploadModalOpen(true)}>
+            <Plus size={18} /> Upload Books
+          </button>
+        </div>
+      </header>
+
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
+        {/* Mobile Sidebar Overlay */}
+        <div className={`mobile-overlay ${isSidebarOpen ? 'active' : ''}`} onClick={() => setIsSidebarOpen(false)} />
+
+        {/* Sidebar (Sits BELOW full-width top header) */}
+        <aside className={`sidebar ${isSidebarOpen ? 'open mobile-open' : 'collapsed'}`} style={{ zIndex: 900 }}>
         
         <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <div className={`shelf-item ${selectedShelf === null ? 'active' : ''}`} onClick={() => setSelectedShelf(null)}>
@@ -924,107 +1028,7 @@ export default function Home() {
           </div>
         )}
 
-        <header className="header" style={{ paddingBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <button 
-            className="btn btn-icon" 
-            onClick={() => setIsSidebarOpen(prev => !prev)}
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', padding: '0.25rem' }}
-            title="Toggle Menu"
-          >
-            <Menu size={24} />
-          </button>
-          
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginRight: '0.5rem' }}>
-            <img 
-              src="/logo.png" 
-              alt="BOOKS Logo" 
-              style={{ width: '32px', height: '32px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 10px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
-            />
-            <span style={{ fontSize: '1.25rem', fontWeight: 700, background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
-              BOOKS
-            </span>
-          </div>
-
-          <div className="search-bar" style={{ flex: 1, maxWidth: '400px', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setIsSearchOpen(true)}>
-            <Search size={20} color="var(--text-secondary)" />
-            <div style={{ color: 'var(--text-secondary)', paddingLeft: '0.5rem', flex: 1 }}>Search...</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', background: 'var(--bg-primary)', padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <Command size={12} /> K
-            </div>
-          </div>
-          
-          <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-secondary)', borderRadius: '0.5rem', border: '1px solid var(--border-color)', padding: '0 0.5rem' }}>
-              <Filter size={14} color="var(--text-secondary)" style={{ marginRight: '0.5rem' }} />
-              <select 
-                value={filterBy} 
-                onChange={(e) => setFilterBy(e.target.value as any)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', padding: '0.5rem 0', fontSize: '0.9rem' }}
-              >
-                <option value="all">All Books</option>
-                <option value="unread">Unread</option>
-                <option value="inProgress">In Progress</option>
-                <option value="finished">Finished</option>
-              </select>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-secondary)', borderRadius: '0.5rem', border: '1px solid var(--border-color)', padding: '0 0.5rem' }}>
-              <SortDesc size={14} color="var(--text-secondary)" style={{ marginRight: '0.5rem' }} />
-              <select 
-                value={sortBy} 
-                onChange={(e) => setSortBy(e.target.value as any)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', padding: '0.5rem 0', fontSize: '0.9rem' }}
-              >
-                <option value="recent">Last Read</option>
-                <option value="added">Recently Added</option>
-                <option value="title">Title</option>
-                <option value="author">Author</option>
-              </select>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-secondary)', padding: '0.25rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)' }}>
-              <button 
-                className={`btn btn-icon`}
-                style={{ backgroundColor: viewMode === 'shelf' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
-                onClick={() => setViewMode('shelf')}
-              >
-                <span title="3D Bookshelf View"><Library size={18} /></span>
-              </button>
-              <button 
-                className={`btn btn-icon`}
-                style={{ backgroundColor: viewMode === 'grid' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
-                onClick={() => setViewMode('grid')}
-              >
-                <span title="Grid View"><LayoutGrid size={18} /></span>
-              </button>
-              <button 
-                className={`btn btn-icon`}
-                style={{ backgroundColor: viewMode === 'list' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
-                onClick={() => setViewMode('list')}
-              >
-                <span title="List View"><List size={18} /></span>
-              </button>
-            </div>
-
-            <div style={{ width: '1px', height: '2rem', backgroundColor: 'var(--border-color)' }}></div>
-
-            <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme">
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            <input 
-              type="file"
-              multiple
-              ref={fileInputRef} 
-              style={{ display: 'none' }} 
-              accept=".pdf,.epub" 
-              onChange={handleFileUpload} 
-            />
-            <button className="btn btn-premium-gradient hidden-mobile" onClick={() => setIsUploadModalOpen(true)}>
-              <Plus size={18} /> Upload Books
-            </button>
-          </div>
-        </header>
-
-        <div className="content-area" style={{ flex: 1, overflowY: 'auto', padding: '0 2rem 2rem 2rem' }}>
+        <div className="content-area" style={{ flex: 1, overflowY: 'auto', padding: '1.5rem 2rem 2rem 2rem' }}>
           
           {/* Bespoke Editorial Hero Spotlight */}
           {heroBook && (
@@ -1070,7 +1074,7 @@ export default function Home() {
                     src={getCoverUrl(heroBook)} 
                     alt={heroBook.title} 
                     className="hero-book-cover"
-                    style={{ position: 'relative', zIndex: 1, width: '150px', height: '215px', objectFit: 'cover', borderRadius: '10px', boxShadow: '0 20px 40px rgba(0,0,0,0.7)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    style={{ position: 'relative', zIndex: 1, maxHeight: '220px', width: 'auto', maxWidth: '160px', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 20px 40px rgba(0,0,0,0.7)', border: '1px solid rgba(255,255,255,0.1)' }}
                     onError={(e) => handleImageError(e, heroBook)}
                   />
                 </div>
@@ -1591,5 +1595,6 @@ export default function Home() {
         )}
       </main>
     </div>
+  </div>
   );
 }
