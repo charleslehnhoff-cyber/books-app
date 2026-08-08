@@ -885,8 +885,6 @@ export default function Home() {
             S
           </div>
 
-          <div style={{ width: '1px', height: '1.5rem', backgroundColor: 'var(--border-color)', margin: '0 0.25rem' }}></div>
-
           <input 
             type="file"
             multiple
@@ -895,9 +893,6 @@ export default function Home() {
             accept=".pdf,.epub" 
             onChange={handleFileUpload} 
           />
-          <button className="btn btn-premium-gradient hidden-mobile" onClick={() => setIsUploadModalOpen(true)} style={{ height: '38px', borderRadius: '20px', padding: '0 1.1rem' }}>
-            <Plus size={18} /> Upload Books
-          </button>
         </div>
       </header>
 
@@ -908,6 +903,29 @@ export default function Home() {
         {/* Sidebar (Sits BELOW full-width top header) */}
         <aside className={`sidebar ${isSidebarOpen ? 'open mobile-open' : 'collapsed'}`} style={{ zIndex: 900 }}>
         
+        {/* Prominent Google Workspace + New Style Upload Button */}
+        <div style={{ marginBottom: '1rem', padding: '0 0.25rem' }}>
+          <button 
+            className="btn btn-premium-gradient" 
+            onClick={() => setIsUploadModalOpen(true)}
+            style={{ 
+              width: '100%', 
+              height: '46px', 
+              borderRadius: '23px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              gap: '0.6rem', 
+              fontSize: '0.95rem', 
+              fontWeight: 700, 
+              boxShadow: '0 4px 16px rgba(0, 204, 255, 0.3)',
+              cursor: 'pointer' 
+            }}
+          >
+            <Plus size={20} /> Upload Books
+          </button>
+        </div>
+
         <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <div className={`shelf-item ${selectedShelf === null ? 'active' : ''}`} onClick={() => setSelectedShelf(null)}>
             <BookOpen size={20} />
