@@ -16,13 +16,13 @@ const openSans = Open_Sans({
 import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
-  title: "Sphaerus Books",
-  description: "The world-class digital e-reader and library for Sphaerus. Read, organize, and immerse yourself in your favorite books.",
+  title: "Just BOOKS",
+  description: "The world-class digital e-reader and library. Read, organize, and immerse yourself in your favorite books.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Books"
+    title: "BOOKS"
   },
   icons: {
     icon: '/icon-192x192.png',
@@ -30,16 +30,16 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://books.sphaerus.net'),
   openGraph: {
-    title: 'Sphaerus Books',
-    description: 'The world-class digital e-reader and library for Sphaerus.',
+    title: 'Just BOOKS',
+    description: 'The world-class digital e-reader and library platform.',
     url: 'https://books.sphaerus.net',
-    siteName: 'Sphaerus Books',
+    siteName: 'Just BOOKS',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Sphaerus Books Platform',
+        alt: 'Just BOOKS Platform',
       },
     ],
     locale: 'en_US',
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sphaerus Books',
-    description: 'The world-class digital e-reader and library for Sphaerus.',
+    title: 'Just BOOKS',
+    description: 'The world-class digital e-reader and library platform.',
     images: ['/og-image.png'],
   },
 };

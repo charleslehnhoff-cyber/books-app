@@ -718,11 +718,11 @@ export default function Home() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.25rem', fontWeight: 'bold' }}>
             <img 
               src="/logo.png" 
-              alt="Sphaerus Books Logo" 
+              alt="Just BOOKS Logo" 
               style={{ width: '36px', height: '36px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 12px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
             />
             <span style={{ background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
-              Sphaerus Books
+              Just BOOKS
             </span>
           </div>
           <button 
