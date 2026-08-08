@@ -293,10 +293,21 @@ export default function Home() {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    try {
+      const savedTheme = localStorage.getItem('app-theme') || 'dark';
+      setTheme(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } catch (e) {}
+  }, []);
+
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
+    try {
+      localStorage.setItem('app-theme', newTheme);
+    } catch (e) {}
   };
 
   const handleStartUploads = (files: File[]) => {
