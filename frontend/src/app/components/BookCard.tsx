@@ -233,6 +233,14 @@ const BookCard = React.memo(({
           style={{ position: 'absolute', top: '2.5rem', right: '0.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.25rem', zIndex: 20, minWidth: '160px', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}
         >
           <button 
+            onClick={() => { onToggleMenu(null); onShowDetails(book); }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', textAlign: 'left', padding: '0.5rem', background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '4px' }}
+            onMouseOver={(e) => e.currentTarget.style.background = 'var(--hover-color)'}
+            onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+          >
+            <BookOpen size={16} /> About Book
+          </button>
+          <button 
             onClick={() => { onToggleMenu(null); onToggleShelf(book, 'favorites'); }}
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', textAlign: 'left', padding: '0.5rem', background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '4px' }}
             onMouseOver={(e) => e.currentTarget.style.background = 'var(--hover-color)'}
@@ -259,6 +267,15 @@ const BookCard = React.memo(({
           >
             <Edit3 size={16} /> Edit Details
           </button>
+          <a 
+            href={`/api/books/${book.id}/download`} 
+            download
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', textAlign: 'left', padding: '0.5rem', background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '4px', textDecoration: 'none' }}
+            onMouseOver={(e) => e.currentTarget.style.background = 'var(--hover-color)'}
+            onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+          >
+            <Download size={16} /> Download
+          </a>
           <div style={{ height: '1px', backgroundColor: 'var(--border-color)', margin: '0.25rem 0' }} />
           <button 
             onClick={() => { onToggleMenu(null); onDeleteBook(book.id); }}

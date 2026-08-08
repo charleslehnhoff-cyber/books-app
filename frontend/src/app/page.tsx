@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu } from 'lucide-react';
+import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu, Download } from 'lucide-react';
 import { SphaerusLibrary, SphaerusHeart, SphaerusClock, SphaerusZap, SphaerusAward } from './components/BrandIcons';
 import Link from 'next/link';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import BookCard from './components/BookCard';
+import BookDetailsModal from './components/BookDetailsModal';
 import AnnotationsSidebar from './components/AnnotationsSidebarPanel';
 
 export type BookType = {
@@ -109,6 +110,7 @@ export default function Home() {
   const [activeBookMenu, setActiveBookMenu] = useState<string | null>(null);
   const [activeShelfModal, setActiveShelfModal] = useState<string | null>(null);
   const [activeEditModal, setActiveEditModal] = useState<string | null>(null);
+  const [selectedDetailBook, setSelectedDetailBook] = useState<BookType | null>(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isAnnotationsOpen, setIsAnnotationsOpen] = useState(false);
@@ -877,15 +879,14 @@ export default function Home() {
 
                <div style={{ width: '100%', height: '250px', marginBottom: '2rem' }}>
                  <ResponsiveContainer width="100%" height="100%">
-                   <BarChart data={[
-                     { name: 'Mon', pages: Math.floor(Math.random() * 50) + 10 },
-                     { name: 'Tue', pages: Math.floor(Math.random() * 50) + 20 },
-                     { name: 'Wed', pages: Math.floor(Math.random() * 50) + 15 },
-                     { name: 'Thu', pages: Math.floor(Math.random() * 50) + 5 },
-                     { name: 'Fri', pages: Math.floor(Math.random() * 50) + 30 },
-                     { name: 'Sat', pages: Math.floor(Math.random() * 50) + 45 },
-                     { name: 'Sun', pages: Math.floor(Math.random() * 50) + 60 },
-                   ]}>
+                   <BarChart data={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => {
+                     const totalForDay = books.reduce((acc, b) => {
+                       const d = new Date(b.uploadDate || Date.now());
+                       const dayIdx = (d.getDay() + 6) % 7; // Map Sun=0 to index 6
+                       return dayIdx === i ? acc + (b.currentPage || b.progress || 12) : acc;
+                     }, 0);
+                     return { name: day, pages: totalForDay > 0 ? totalForDay : (i * 15 + 10) };
+                   })}>
                      <XAxis dataKey="name" stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} />
                      <Tooltip 
                        cursor={{ fill: 'rgba(255,255,255,0.05)' }} 
@@ -1084,7 +1085,7 @@ export default function Home() {
                   key={book.id}
                   book={book}
                   viewMode="grid"
-                  onShowDetails={(b) => { window.location.href = `/read?id=${b.id}`; }}
+                  onShowDetails={(b) => setSelectedDetailBook(b)}
                   isSelected={selectedBooks.includes(book.id)}
                   isActiveMenu={activeBookMenu === book.id}
                   heroColor={heroColor}
@@ -1403,6 +1404,15 @@ export default function Home() {
 
         {isAnnotationsOpen && (
           <AnnotationsSidebar books={books} onClose={() => setIsAnnotationsOpen(false)} />
+        )}
+
+        {selectedDetailBook && (
+          <BookDetailsModal 
+            book={selectedDetailBook}
+            onClose={() => setSelectedDetailBook(null)}
+            getCoverUrl={getCoverUrl}
+            formatTitle={formatTitle}
+          />
         )}
       </main>
     </div>
