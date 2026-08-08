@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu, Download, Sparkles } from 'lucide-react';
+import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu, Download, Sparkles, Folder, Star, Bookmark, Tag, Archive, Compass, Briefcase, Feather } from 'lucide-react';
 import { SphaerusLibrary, SphaerusHeart, SphaerusClock, SphaerusZap, SphaerusAward } from './components/BrandIcons';
 import SphaerusLogo from './components/SphaerusLogo';
 import Link from 'next/link';
@@ -600,6 +600,30 @@ export default function Home() {
   const totalPagesRead = books.reduce((sum, b) => sum + (b.progress || 0), 0);
   const inProgress = books.filter(b => b.progress && b.progress > 1).length;
 
+  // Helper to render bespoke vector shelf icons
+  const renderShelfIcon = (iconName?: string, color?: string) => {
+    const iconColor = color || 'var(--accent)';
+    switch (iconName) {
+      case 'folder': return <Folder size={18} color={iconColor} />;
+      case 'book': return <BookOpen size={18} color={iconColor} />;
+      case 'star': return <Star size={18} color={iconColor} fill={iconColor} />;
+      case 'sparkles': return <Sparkles size={18} color={iconColor} />;
+      case 'bookmark': return <Bookmark size={18} color={iconColor} fill={iconColor} />;
+      case 'tag': return <Tag size={18} color={iconColor} />;
+      case 'archive': return <Archive size={18} color={iconColor} />;
+      case 'compass': return <Compass size={18} color={iconColor} />;
+      case 'briefcase': return <Briefcase size={18} color={iconColor} />;
+      case 'feather': return <Feather size={18} color={iconColor} />;
+      case 'award': return <Award size={18} color={iconColor} />;
+      case 'flame': return <Flame size={18} color={iconColor} fill={iconColor} />;
+      default:
+        if (iconName && iconName.length <= 2) {
+          return <span style={{ fontSize: '1rem' }}>{iconName}</span>;
+        }
+        return <Folder size={18} color={iconColor} />;
+    }
+  };
+
   return (
     <div 
       className="app-container"
@@ -888,26 +912,27 @@ export default function Home() {
               <Plus size={14} /> Create
             </button>
           </div>
-          
-          {shelves.map(shelf => {
-            const count = books.filter(b => b.collections?.includes(shelf.id)).length;
-            return (
-              <div 
-                key={shelf.id} 
-                className={`shelf-item shelf-drop-zone ${selectedShelf === shelf.id ? 'active' : ''} ${isDragOverShelf === shelf.id ? 'drag-over' : ''}`}
-                onClick={() => setSelectedShelf(shelf.id)}
-                onDragOver={(e) => handleDragOver(e, shelf.id)}
-                onDragLeave={handleDragLeave}
-                onDrop={(e) => handleDropToShelf(e, shelf.id)}
-                style={{ borderLeft: shelf.color ? `3px solid ${shelf.color}` : 'none' }}
-              >
-                <span style={{ fontSize: '1.1rem', minWidth: '22px', textAlign: 'center' }}>{shelf.icon || '📚'}</span>
-                <span title={shelf.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, fontWeight: selectedShelf === shelf.id ? 600 : 400 }}>{shelf.name}</span>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, marginRight: '0.25rem' }}>{count}</span>
-                <div className="shelf-actions" style={{ display: 'flex', gap: '0.5rem' }}>
-                  <span title="Customize Shelf Style & Icon" onClick={(e) => { e.stopPropagation(); setEditingShelf(shelf); }} style={{ display: 'flex', cursor: 'pointer' }}>
-                    <Settings size={14} className="shelf-action-icon" />
-                  </span>
+            {shelves.map(shelf => {
+    const count = books.filter(b => b.collections?.includes(shelf.id)).length;
+    return (
+      <div 
+        key={shelf.id} 
+        className={`shelf-item shelf-drop-zone ${selectedShelf === shelf.id ? 'active' : ''} ${isDragOverShelf === shelf.id ? 'drag-over' : ''}`}
+        onClick={() => setSelectedShelf(shelf.id)}
+        onDragOver={(e) => handleDragOver(e, shelf.id)}
+        onDragLeave={handleDragLeave}
+        onDrop={(e) => handleDropToShelf(e, shelf.id)}
+        style={{ borderLeft: shelf.color ? `3px solid ${shelf.color}` : 'none' }}
+      >
+        <span style={{ minWidth: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {renderShelfIcon(shelf.icon, shelf.color)}
+        </span>
+        <span title={shelf.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, fontWeight: selectedShelf === shelf.id ? 600 : 400 }}>{shelf.name}</span>
+        <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, marginRight: '0.25rem' }}>{count}</span>
+        <div className="shelf-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+          <span title="Customize Shelf Style & Icon" onClick={(e) => { e.stopPropagation(); setEditingShelf(shelf); }} style={{ display: 'flex', cursor: 'pointer' }}>
+            <Settings size={14} className="shelf-action-icon" />
+          </span>
                   <span title="Delete Shelf" onClick={(e) => handleDeleteShelf(shelf.id, e)} style={{ display: 'flex', cursor: 'pointer' }}>
                     <Trash2 size={14} className="shelf-action-icon text-danger" />
                   </span>
@@ -1535,21 +1560,23 @@ export default function Home() {
               <div>
                 <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.4rem' }}>Choose Icon</label>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0.5rem' }}>
-                  {['📚', '🚀', '🧠', '🎨', '⚡', '💼', '🔬', '💡', '🔥', '🏆', '🎧', '🌟'].map(icon => (
+                  {['folder', 'book', 'star', 'sparkles', 'bookmark', 'tag', 'archive', 'compass', 'briefcase', 'feather', 'award', 'flame'].map(icon => (
                     <button
                       key={icon}
                       type="button"
                       onClick={() => setEditingShelf({ ...editingShelf, icon })}
                       style={{
-                        fontSize: '1.3rem',
-                        padding: '0.4rem',
+                        padding: '0.5rem',
                         borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         border: editingShelf.icon === icon ? '2px solid var(--accent)' : '1px solid var(--border-color)',
                         background: editingShelf.icon === icon ? 'rgba(0, 204, 255, 0.15)' : 'var(--bg-secondary)',
                         cursor: 'pointer'
                       }}
                     >
-                      {icon}
+                      {renderShelfIcon(icon, editingShelf.color)}
                     </button>
                   ))}
                 </div>
