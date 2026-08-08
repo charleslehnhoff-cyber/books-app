@@ -714,26 +714,6 @@ export default function Home() {
 
       {/* Sidebar */}
       <aside className={`sidebar ${isSidebarOpen ? 'open mobile-open' : 'collapsed'}`} style={{ zIndex: 1000 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem', marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.25rem', fontWeight: 'bold' }}>
-            <img 
-              src="/logo.png" 
-              alt="BOOK Logo" 
-              style={{ width: '36px', height: '36px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 12px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
-            />
-            <span style={{ background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
-              BOOK
-            </span>
-          </div>
-          <button 
-            className="btn btn-icon" 
-            onClick={() => setIsSidebarOpen(false)} 
-            style={{ color: 'var(--text-secondary)', background: 'transparent', border: 'none', padding: 0 }}
-            title="Collapse Sidebar"
-          >
-            <X size={20} />
-          </button>
-        </div>
         
         <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <div className={`shelf-item ${selectedShelf === null ? 'active' : ''}`} onClick={() => setSelectedShelf(null)}>
@@ -920,15 +900,27 @@ export default function Home() {
           </div>
         )}
 
-        <header className="header" style={{ paddingBottom: '1rem' }}>
+        <header className="header" style={{ paddingBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <button 
             className="btn btn-icon" 
             onClick={() => setIsSidebarOpen(prev => !prev)}
-            style={{ marginRight: '0.5rem', background: 'transparent', border: 'none', color: 'var(--text-primary)' }}
-            title="Toggle Sidebar Menu"
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', padding: '0.25rem' }}
+            title="Toggle Menu"
           >
             <Menu size={24} />
           </button>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginRight: '0.5rem' }}>
+            <img 
+              src="/logo.png" 
+              alt="BOOK Logo" 
+              style={{ width: '32px', height: '32px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 10px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
+            />
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
+              BOOK
+            </span>
+          </div>
+
           <div className="search-bar" style={{ flex: 1, maxWidth: '400px', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setIsSearchOpen(true)}>
             <Search size={20} color="var(--text-secondary)" />
             <div style={{ color: 'var(--text-secondary)', paddingLeft: '0.5rem', flex: 1 }}>Search...</div>
