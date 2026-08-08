@@ -1027,24 +1027,25 @@ export default function Home() {
                 zIndex: 0
               }} />
 
-              <div className="hero-book" style={{ zIndex: 1, display: 'flex', gap: '2rem', alignItems: 'center', padding: '2.5rem', width: '100%' }}>
+              <div className="hero-book-container" style={{ zIndex: 1, display: 'flex', gap: '2rem', alignItems: 'center', padding: '2.5rem', width: '100%' }}>
                 <img 
                   src={getCoverUrl(heroBook)} 
                   alt={heroBook.title} 
-                  style={{ width: '140px', height: '200px', objectFit: 'cover', borderRadius: '8px', boxShadow: '0 12px 24px rgba(0,0,0,0.5)' }}
+                  className="hero-book-cover"
+                  style={{ width: '140px', height: '200px', objectFit: 'cover', borderRadius: '8px', boxShadow: '0 12px 24px rgba(0,0,0,0.5)', flexShrink: 0 }}
                   onError={(e) => handleImageError(e, heroBook)}
                 />
-                <div style={{ flex: 1 }}>
+                <div className="hero-book-info" style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ color: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Continue Reading</div>
-                  <h2 style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', color: 'var(--text-primary)', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>{formatTitle(heroBook.title)}</h2>
-                  <div style={{ marginBottom: '2rem' }}>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>You left off on Page {heroBook.progress}.</div>
+                  <h2 className="hero-book-title" style={{ fontSize: '2.2rem', margin: '0 0 0.5rem 0', color: 'var(--text-primary)', textShadow: '0 2px 4px rgba(0,0,0,0.1)', lineHeight: 1.2 }}>{formatTitle(heroBook.title)}</h2>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginBottom: '0.5rem' }}>You left off on Page {heroBook.progress}.</div>
                     <div style={{ width: '100%', maxWidth: '300px', background: 'rgba(255,255,255,0.2)', height: '6px', borderRadius: '3px', overflow: 'hidden', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2)' }}>
                       <div style={{ width: `${heroBook.progressPercent || Math.min(100, Math.max(5, ((heroBook.progress || 0) / 300) * 100))}%`, height: '100%', background: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', borderRadius: '3px' }}></div>
                     </div>
                   </div>
-                  <Link href={`/read?id=${heroBook.id}`} style={{ textDecoration: 'none' }}>
-                    <button className="btn btn-primary" style={{ padding: '0.75rem 2rem', fontSize: '1.1rem', display: 'flex', gap: '0.5rem', alignItems: 'center', backgroundColor: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', border: 'none', boxShadow: `0 4px 12px ${heroColor}` }}>
+                  <Link href={`/read?id=${heroBook.id}`} style={{ textDecoration: 'none', display: 'inline-block' }}>
+                    <button className="btn btn-primary" style={{ padding: '0.75rem 2rem', fontSize: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center', backgroundColor: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', border: 'none', boxShadow: `0 4px 12px ${heroColor}` }}>
                       <Play size={18} fill="currentColor" /> Jump Back In
                     </button>
                   </Link>
