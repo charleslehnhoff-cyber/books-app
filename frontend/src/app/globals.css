@@ -3,7 +3,7 @@
   --bg-primary: #010105; /* Obsidian */
   --bg-secondary: #070d18; /* Obsidian Light */
   --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-secondary: #94A3B8; /* Muted Slate */
   --accent: #00CCFF; /* Sapphire Cyan */
   --accent-hover: #4DD2FF; /* Sapphire Light */
   --border-color: #182B49; /* Corporate Navy */
@@ -23,7 +23,7 @@
   --bg-primary: #010105; /* Obsidian */
   --bg-secondary: #070d18; 
   --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-secondary: #94A3B8; /* Muted Slate */
   --accent: #00CCFF; /* Sapphire Cyan */
   --accent-hover: #4DD2FF;
   --border-color: #182B49; /* Corporate Navy */
