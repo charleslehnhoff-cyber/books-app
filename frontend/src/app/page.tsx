@@ -727,7 +727,8 @@ export default function Home() {
         <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <div className={`shelf-item ${selectedShelf === null ? 'active' : ''}`} onClick={() => setSelectedShelf(null)}>
             <BookOpen size={20} />
-            <span>All Books</span>
+            <span style={{ flex: 1 }}>All Books</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{books.length}</span>
           </div>
 
           <div 
@@ -738,10 +739,11 @@ export default function Home() {
             onDrop={(e) => handleDropToShelf(e, 'favorites')}
           >
             <SphaerusHeart size={20} color="#ef4444" fill={selectedShelf === 'favorites' ? '#ef4444' : 'none'} />
-            <span style={{ fontWeight: 600 }}>Favorites</span>
+            <span style={{ fontWeight: 600, flex: 1 }}>Favorites</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{books.filter(b => b.collections?.includes('favorites')).length}</span>
           </div>
 
-          <div style={{ marginTop: '2rem', marginBottom: '1rem', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 600, letterSpacing: '0.05em' }}>
+          <div style={{ marginTop: '1.5rem', marginBottom: '0.5rem', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 600, letterSpacing: '0.05em' }}>
             Smart Collections
           </div>
 
@@ -765,32 +767,44 @@ export default function Home() {
             <span>Epics</span>
           </div>
 
-          <div style={{ marginTop: '2rem', marginBottom: '1rem', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 600, letterSpacing: '0.05em' }}>
-            Shelves
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', marginBottom: '0.5rem' }}>
+            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 600, letterSpacing: '0.05em' }}>
+              Shelves
+            </span>
+            <button 
+              onClick={handleNewShelf}
+              style={{ background: 'transparent', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+            >
+              <Plus size={14} /> Create
+            </button>
           </div>
           
-          {shelves.map(shelf => (
-            <div 
-              key={shelf.id} 
-              className={`shelf-item shelf-drop-zone ${selectedShelf === shelf.id ? 'active' : ''} ${isDragOverShelf === shelf.id ? 'drag-over' : ''}`}
-              onClick={() => setSelectedShelf(shelf.id)}
-              onDragOver={(e) => handleDragOver(e, shelf.id)}
-              onDragLeave={handleDragLeave}
-              onDrop={(e) => handleDropToShelf(e, shelf.id)}
-              style={{ borderLeft: shelf.color ? `3px solid ${shelf.color}` : 'none' }}
-            >
-              <span style={{ fontSize: '1.1rem', minWidth: '22px', textAlign: 'center' }}>{shelf.icon || '📚'}</span>
-              <span title={shelf.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, fontWeight: selectedShelf === shelf.id ? 600 : 400 }}>{shelf.name}</span>
-              <div className="shelf-actions" style={{ display: 'flex', gap: '0.5rem' }}>
-                <span title="Customize Shelf Style & Icon" onClick={(e) => { e.stopPropagation(); setEditingShelf(shelf); }} style={{ display: 'flex', cursor: 'pointer' }}>
-                  <Settings size={14} className="shelf-action-icon" />
-                </span>
-                <span title="Delete Shelf" onClick={(e) => handleDeleteShelf(shelf.id, e)} style={{ display: 'flex', cursor: 'pointer' }}>
-                  <Trash2 size={14} className="shelf-action-icon text-danger" />
-                </span>
+          {shelves.map(shelf => {
+            const count = books.filter(b => b.collections?.includes(shelf.id)).length;
+            return (
+              <div 
+                key={shelf.id} 
+                className={`shelf-item shelf-drop-zone ${selectedShelf === shelf.id ? 'active' : ''} ${isDragOverShelf === shelf.id ? 'drag-over' : ''}`}
+                onClick={() => setSelectedShelf(shelf.id)}
+                onDragOver={(e) => handleDragOver(e, shelf.id)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDropToShelf(e, shelf.id)}
+                style={{ borderLeft: shelf.color ? `3px solid ${shelf.color}` : 'none' }}
+              >
+                <span style={{ fontSize: '1.1rem', minWidth: '22px', textAlign: 'center' }}>{shelf.icon || '📚'}</span>
+                <span title={shelf.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, fontWeight: selectedShelf === shelf.id ? 600 : 400 }}>{shelf.name}</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, marginRight: '0.25rem' }}>{count}</span>
+                <div className="shelf-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+                  <span title="Customize Shelf Style & Icon" onClick={(e) => { e.stopPropagation(); setEditingShelf(shelf); }} style={{ display: 'flex', cursor: 'pointer' }}>
+                    <Settings size={14} className="shelf-action-icon" />
+                  </span>
+                  <span title="Delete Shelf" onClick={(e) => handleDeleteShelf(shelf.id, e)} style={{ display: 'flex', cursor: 'pointer' }}>
+                    <Trash2 size={14} className="shelf-action-icon text-danger" />
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <button className="btn" onClick={() => setShowAnalytics(true)} style={{ width: '100%', justifyContent: 'flex-start', background: 'transparent', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>

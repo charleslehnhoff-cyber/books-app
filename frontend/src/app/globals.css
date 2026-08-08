@@ -551,11 +551,11 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .content-area {
-    padding: 1rem 1rem 2rem 1rem !important;
+    padding: 0.75rem 0.75rem 2rem 0.75rem !important;
   }
   
   .header {
-    padding: 0.75rem 1rem !important;
+    padding: 0.75rem 0.75rem !important;
     gap: 0.5rem;
     flex-wrap: wrap;
     height: auto !important;
@@ -580,22 +580,22 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .hero-book-container {
-    padding: 1.5rem !important;
-    gap: 1.25rem !important;
+    padding: 1.25rem !important;
+    gap: 1rem !important;
     flex-direction: column !important;
     text-align: center !important;
     align-items: center !important;
   }
   
   .hero-book-cover {
-    width: 120px !important;
-    height: 175px !important;
+    width: 110px !important;
+    height: 160px !important;
     margin: 0 auto !important;
     box-shadow: 0 8px 20px rgba(0,0,0,0.6) !important;
   }
   
   .hero-book-title {
-    font-size: 1.35rem !important;
+    font-size: 1.2rem !important;
     line-height: 1.3 !important;
     margin-bottom: 0.5rem !important;
     display: -webkit-box;
@@ -615,6 +615,74 @@ h1, h2, h3, h4, h5, h6 {
   .hero-book-info .btn-primary {
     width: 100% !important;
     justify-content: center;
+  }
+
+  /* Google Books 3-Column Mobile Grid */
+  .books-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.6rem !important;
+  }
+
+  .book-card {
+    border-radius: 8px !important;
+  }
+
+  .book-info {
+    padding: 0.4rem 0.25rem !important;
+  }
+
+  .book-title {
+    font-size: 0.72rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.15rem !important;
+    height: 1.75rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .book-author {
+    font-size: 0.62rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .book-menu-trigger {
+    opacity: 0.9 !important;
+    width: 26px !important;
+    height: 26px !important;
+    top: 0.35rem !important;
+    right: 0.35rem !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(4px);
+    border-radius: 50% !important;
+  }
+
+  /* Google Books Floating Popover Mobile Menu */
+  .sidebar {
+    position: absolute !important;
+    top: 60px !important;
+    left: 0.75rem !important;
+    width: 280px !important;
+    max-height: 80vh !important;
+    border-radius: 16px !important;
+    background: rgba(15, 23, 42, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75) !important;
+    transform: translateY(-10px) scale(0.95) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
   }
 }
 
