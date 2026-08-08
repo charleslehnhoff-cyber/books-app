@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Next.js Build Output
+.next/
+out/
+tsconfig.tsbuildinfo
+
+# Java / Maven Build Output
+target/
+*.class
+*.jar
+*.war
+maven.zip
+maven/
+
+# Environment & Secrets
+.env
+.env.local
+.env*.local
+
+# OS / Editor Files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Local Logs and Temporary Files
+*.log
+build_id*.txt
+build_list*.txt
+build_log*.txt
+_old_backend/
+_old_frontend/
