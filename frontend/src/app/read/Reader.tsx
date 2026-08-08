@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { ArrowLeft, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, FileText, BookOpen, Maximize, LayoutGrid, List, Play, Square, Star, Bookmark, Download, Settings, Search, RotateCw, AlignJustify, X, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import ArticleReaderModal from './ArticleReaderModal';
+import AudiobookPlayerModal from './AudiobookPlayerModal';
 import { useSearchParams } from 'next/navigation';
 
 // react-pdf
@@ -40,6 +41,7 @@ export default function Reader() {
   const [showUI, setShowUI] = useState(true);
   const [rotation, setRotation] = useState<number>(0);
   const [showArticleReader, setShowArticleReader] = useState(false);
+  const [showAudiobookPlayer, setShowAudiobookPlayer] = useState(false);
 
   // PDF State
   const [pdfDoc, setPdfDoc] = useState<any>(null);
@@ -824,11 +826,11 @@ export default function Reader() {
             <div style={{ width: '1px', height: '1.5rem', backgroundColor: 'var(--bg-secondary)', margin: '0 2px' }} />
             <button
               className={`btn btn-icon`}
-              style={{ color: isPlaying ? 'var(--accent)' : '#fff', border: 'none' }}
-              onClick={playText}
+              style={{ color: showAudiobookPlayer || isPlaying ? 'var(--accent)' : '#fff', border: 'none' }}
+              onClick={() => setShowAudiobookPlayer(true)}
             >
-              <span title={isPlaying ? "Stop Reading" : "Read Aloud"}>
-                {isPlaying ? <Square size={18} fill="var(--accent)" /> : <Play size={18} />}
+              <span title="AI Voice Audiobook Player">
+                <Play size={18} fill={showAudiobookPlayer || isPlaying ? "var(--accent)" : "none"} />
               </span>
             </button>
             <div style={{ width: '1px', height: '1.5rem', backgroundColor: 'var(--bg-secondary)', margin: '0 2px' }} />
@@ -1375,6 +1377,17 @@ export default function Reader() {
           text={selection?.text || highlights?.[0]?.text || book?.title || 'Extracted page content ready for Bionic typography reading.'}
           title={book?.title || 'Article View'}
           onClose={() => setShowArticleReader(false)}
+        />
+      )}
+
+      {/* AI Voice Audiobook Narration Modal */}
+      {showAudiobookPlayer && (
+        <AudiobookPlayerModal
+          text={selection?.text || highlights?.[0]?.text || book?.description || book?.title || 'Welcome to BOOKS AI Voice Audiobook Player.'}
+          title={book?.title || 'Audiobook Player'}
+          author={book?.author || 'BOOKS Reader'}
+          coverUrl={book?.coverUrl}
+          onClose={() => setShowAudiobookPlayer(false)}
         />
       )}
     </div>
