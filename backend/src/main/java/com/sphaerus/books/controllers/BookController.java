@@ -45,7 +45,7 @@ public class BookController {
         if (limit != null && limit > 0) {
             query = query.limit(limit);
         } else {
-            query = query.limit(50); // Safe default for unpaginated legacy clients
+            query = query.limit(1000); // Support up to 1000 books for complete library viewing
         }
         
         List<QueryDocumentSnapshot> documents = query.get().get().getDocuments();

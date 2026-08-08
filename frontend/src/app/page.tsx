@@ -137,7 +137,7 @@ export default function Home() {
   const [heroColor, setHeroColor] = useState('rgba(0, 204, 255, 0.4)');
   const [editForm, setEditForm] = useState({ title: '', author: '', coverUrl: '' });
 
-  const [visibleCount, setVisibleCount] = useState(24);
+  const [visibleCount, setVisibleCount] = useState(100);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [streak, setStreak] = useState(0);
 
@@ -157,13 +157,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const contentArea = document.querySelector('.content-area');
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setVisibleCount((prev) => prev + 24);
+          setVisibleCount((prev) => prev + 50);
         }
       },
-      { threshold: 0.1, rootMargin: '200px' }
+      { root: contentArea, threshold: 0.1, rootMargin: '400px' }
     );
     
     if (loadMoreRef.current) {
@@ -178,7 +179,7 @@ export default function Home() {
       try {
         const fetchOpts: RequestInit = { headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' } };
         const [booksRes, shelvesRes] = await Promise.all([
-          fetch('/api/books', fetchOpts),
+          fetch('/api/books?limit=1000', fetchOpts),
           fetch('/api/shelves', fetchOpts)
         ]);
         if (booksRes.ok) {
