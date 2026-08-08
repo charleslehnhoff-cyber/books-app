@@ -716,8 +716,14 @@ export default function Home() {
       <aside className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`} style={{ zIndex: 1000 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem', marginBottom: '2rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.25rem', fontWeight: 'bold' }}>
-            <SphaerusLibrary className="text-accent" />
-            <span>Books</span>
+            <img 
+              src="/logo.png" 
+              alt="Sphaerus Books Logo" 
+              style={{ width: '36px', height: '36px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 12px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
+            />
+            <span style={{ background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
+              Sphaerus Books
+            </span>
           </div>
           <button 
             className="btn btn-icon hidden-desktop" 
