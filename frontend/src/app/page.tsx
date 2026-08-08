@@ -985,13 +985,6 @@ export default function Home() {
             <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme">
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '0.25rem' }}>
-              <div style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '50%', overflow: 'hidden', border: '2px solid var(--accent)', boxShadow: '0 0 10px rgba(0, 204, 255, 0.4)', cursor: 'pointer' }} title="User Profile">
-                <img src="/avatar.jpg" alt="User Profile Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <span style={{ position: 'absolute', bottom: '1px', right: '1px', width: '10px', height: '10px', backgroundColor: '#10b981', border: '2px solid var(--bg-secondary)', borderRadius: '50%' }} />
-            </div>
             <input 
               type="file"
               multiple
