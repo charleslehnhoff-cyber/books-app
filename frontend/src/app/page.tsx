@@ -771,7 +771,7 @@ export default function Home() {
               color: theme === 'dark' ? '#FFFFFF' : '#1F1F1F',
               letterSpacing: '-0.02em' 
             }}>
-              BOOKS
+              Books
             </span>
           </div>
         </div>
