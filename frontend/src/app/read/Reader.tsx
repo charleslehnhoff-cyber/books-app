@@ -753,18 +753,24 @@ export default function Reader() {
         style={{
           position: 'absolute', top: 0, left: 0, right: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '1rem', borderBottom: '1px solid var(--border-color)', backgroundColor: 'rgba(30, 41, 59, 0.95)',
-          backdropFilter: 'blur(8px)', zIndex: 50
+          padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-color)', backgroundColor: 'rgba(7, 13, 24, 0.9)',
+          backdropFilter: 'blur(12px)', zIndex: 50, boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Link href="/" className="btn btn-icon" style={{ marginRight: '1rem', color: '#fff' }}>
-            <span title="Back to Library"><ArrowLeft size={20} /></span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 0 }}>
+          <Link href="/" className="btn btn-icon" style={{ color: '#fff', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-color)' }}>
+            <span title="Back to Library"><ArrowLeft size={18} /></span>
           </Link>
-          <h1 className="hidden-mobile" style={{ fontSize: '1.25rem', fontWeight: 600, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '250px' }}>
-            {book.title}
-          </h1>
-          <h2 className="reader-title-mobile" style={{ margin: 0, fontSize: '1.2rem', color: '#fff' }}>{book?.title || 'Loading...'}</h2>
+          <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+            <h1 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '320px' }}>
+              {book?.title || 'Loading Document...'}
+            </h1>
+            {book?.author && book.author !== 'Unknown Author' && (
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '320px' }}>
+                {book.author}
+              </span>
+            )}
+          </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -1172,17 +1178,33 @@ export default function Reader() {
 
                 {/* SPREAD MODE */}
                 {!calculatingLayout && viewMode === 'spread' && spreadLayout[spreadIndex] && (
-                  <div key={`spread-${spreadIndex}`} className="page-fade" style={{ display: 'flex', justifyContent: 'center', gap: '2px', marginBottom: '2rem', filter: 'drop-shadow(0 25px 25px rgb(0 0 0 / 0.5))' }}>
-                    {spreadLayout[spreadIndex].map(pageNum => (
-                      <Page
-                        key={`spread-page-${pageNum}`}
-                        pageNumber={pageNum}
-                        scale={scale}
-                        rotate={rotation}
-                        width={pageWidth ? pageWidth / 2 : undefined}
-                        renderTextLayer={true}
-                        renderAnnotationLayer={true}
-                      />
+                  <div key={`spread-${spreadIndex}`} className="page-fade" style={{ position: 'relative', display: 'flex', justifyContent: 'center', marginBottom: '2rem', filter: 'drop-shadow(0 30px 40px rgba(0, 0, 0, 0.7))', borderRadius: '4px', overflow: 'hidden' }}>
+                    {spreadLayout[spreadIndex].map((pageNum, idx) => (
+                      <div key={`spread-page-${pageNum}`} style={{ position: 'relative' }}>
+                        <Page
+                          pageNumber={pageNum}
+                          scale={scale}
+                          rotate={rotation}
+                          width={pageWidth ? pageWidth / 2 : undefined}
+                          renderTextLayer={true}
+                          renderAnnotationLayer={true}
+                        />
+                        {/* Realistic Book Spine Crease Shadow */}
+                        {spreadLayout[spreadIndex].length === 2 && (
+                          <div style={{
+                            position: 'absolute',
+                            top: 0, bottom: 0,
+                            width: '45px',
+                            left: idx === 0 ? 'auto' : 0,
+                            right: idx === 0 ? 0 : 'auto',
+                            pointerEvents: 'none',
+                            zIndex: 10,
+                            background: idx === 0 
+                              ? 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 65%, rgba(0,0,0,0.45) 100%)' 
+                              : 'linear-gradient(to left, transparent 0%, rgba(0,0,0,0.2) 65%, rgba(0,0,0,0.45) 100%)'
+                          }} />
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
@@ -1292,23 +1314,24 @@ export default function Reader() {
         <footer
           className={`auto-hide auto-hide-footer ${!showUI ? 'hidden' : ''}`}
           style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0,
+            position: 'absolute', bottom: '1.25rem', left: '50%', transform: 'translateX(-50%)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem',
-            padding: '1rem 2rem', borderTop: '1px solid var(--border-color)', backgroundColor: 'rgba(30, 41, 59, 0.95)',
-            backdropFilter: 'blur(8px)', zIndex: 50
+            padding: '0.75rem 1.5rem', border: '1px solid var(--border-color)', backgroundColor: 'rgba(7, 13, 24, 0.9)',
+            backdropFilter: 'blur(16px)', zIndex: 50, borderRadius: '2rem', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.6)',
+            width: 'calc(100% - 3rem)', maxWidth: '750px'
           }}
         >
           <button
             className="btn btn-icon"
-            style={{ color: '#fff', border: 'none', opacity: isPrevDisabled ? 0.5 : 1 }}
+            style={{ color: '#fff', border: 'none', opacity: isPrevDisabled ? 0.4 : 1, background: 'rgba(255,255,255,0.05)' }}
             onClick={handlePrev}
             disabled={isPrevDisabled}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={18} />
           </button>
 
-          <div style={{ flex: 1, maxWidth: '800px', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', minWidth: '20px' }}>1</span>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', minWidth: '28px', fontWeight: 600, textAlign: 'right' }}>{pageNumber}</span>
             <input
               type="range"
               min={1}
@@ -1316,16 +1339,20 @@ export default function Reader() {
               value={pageNumber}
               onChange={(e) => goToPage(Number(e.target.value))}
             />
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', minWidth: '20px' }}>{numPages || '-'}</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', minWidth: '28px', fontWeight: 600 }}>{numPages || '-'}</span>
+          </div>
+
+          <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--accent)', background: 'rgba(0, 204, 255, 0.1)', padding: '0.25rem 0.6rem', borderRadius: '1rem', whiteSpace: 'nowrap' }}>
+            {numPages ? `${Math.round((pageNumber / numPages) * 100)}%` : '0%'}
           </div>
 
           <button
             className="btn btn-icon"
-            style={{ color: '#fff', border: 'none', opacity: isNextDisabled ? 0.5 : 1 }}
+            style={{ color: '#fff', border: 'none', opacity: isNextDisabled ? 0.4 : 1, background: 'rgba(255,255,255,0.05)' }}
             onClick={handleNext}
             disabled={isNextDisabled}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={18} />
           </button>
         </footer>
       )}
