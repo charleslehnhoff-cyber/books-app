@@ -179,8 +179,54 @@ h1, h2, h3, h4, h5, h6 {
 
 .book-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-glow);
-  border-color: rgba(0, 204, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 204, 255, 0.35), 0 0 20px rgba(0, 204, 255, 0.2);
+  border-color: rgba(0, 204, 255, 0.4);
+}
+
+/* 3D Bookshelf View Mode */
+.bookshelf-3d-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 4rem 2rem;
+  padding: 1.5rem 0 4rem 0;
+  perspective: 1200px;
+}
+
+.bookshelf-3d-item {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bookshelf-3d-item:hover {
+  transform: translateY(-10px) scale(1.03);
+  z-index: 10;
+}
+
+.bookshelf-ledge {
+  position: absolute;
+  bottom: -22px;
+  left: -12px;
+  right: -12px;
+  height: 22px;
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border-top: 2px solid var(--accent);
+  border-radius: 4px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  transform: rotateX(40deg);
+  transform-origin: top center;
+}
+
+.bookshelf-reflection {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(180deg, rgba(0, 204, 255, 0.2) 0%, transparent 100%);
+  filter: blur(4px);
+  pointer-events: none;
 }
 
 .book-cover {

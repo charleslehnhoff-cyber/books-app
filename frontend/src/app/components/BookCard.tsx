@@ -7,7 +7,7 @@ import { BookType } from '../../types';
 
 interface BookCardProps {
   book: BookType;
-  viewMode: 'grid' | 'list';
+  viewMode: 'grid' | 'list' | 'shelf';
   isSelected: boolean;
   isActiveMenu: boolean;
   heroColor: string;

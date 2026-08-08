@@ -117,7 +117,7 @@ export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'shelf'>('shelf');
   const [sortBy, setSortBy] = useState<'recent' | 'title' | 'author' | 'added'>('recent');
   const [filterBy, setFilterBy] = useState<'all' | 'unread' | 'inProgress' | 'finished'>('all');
   const [isDragOverShelf, setIsDragOverShelf] = useState<string | null>(null);
@@ -960,6 +960,13 @@ export default function Home() {
             <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-secondary)', padding: '0.25rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)' }}>
               <button 
                 className={`btn btn-icon`}
+                style={{ backgroundColor: viewMode === 'shelf' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
+                onClick={() => setViewMode('shelf')}
+              >
+                <span title="3D Bookshelf View"><Library size={18} /></span>
+              </button>
+              <button 
+                className={`btn btn-icon`}
                 style={{ backgroundColor: viewMode === 'grid' ? 'var(--hover-color)' : 'transparent', border: 'none' }}
                 onClick={() => setViewMode('grid')}
               >
@@ -1089,6 +1096,32 @@ export default function Home() {
               <button className="btn btn-premium-gradient" style={{ marginTop: '1.5rem' }} onClick={() => setIsUploadModalOpen(true)}>
                 <Plus size={18} /> Upload Books
               </button>
+            </div>
+          ) : viewMode === 'shelf' ? (
+            <div className="bookshelf-3d-container">
+              {displayedBooks.slice(0, visibleCount).map(book => (
+                <div key={book.id} className="bookshelf-3d-item">
+                  <BookCard
+                    book={book}
+                    viewMode="shelf"
+                    onShowDetails={(b) => setSelectedDetailBook(b)}
+                    isSelected={selectedBooks.includes(book.id)}
+                    isActiveMenu={activeBookMenu === book.id}
+                    heroColor={heroColor}
+                    onToggleSelection={toggleBookSelection}
+                    onToggleMenu={setActiveBookMenu}
+                    onToggleShelf={handleToggleShelf}
+                    onManageShelves={setActiveShelfModal}
+                    onEditDetails={(id, title, author, coverUrl) => { setActiveEditModal(id); setEditForm({ title, author, coverUrl }); }}
+                    onDeleteBook={handleDeleteBook}
+                    getCoverUrl={getCoverUrl}
+                    handleImageError={handleImageError}
+                    formatTitle={formatTitle}
+                  />
+                  <div className="bookshelf-ledge" />
+                  <div className="bookshelf-reflection" />
+                </div>
+              ))}
             </div>
           ) : viewMode === 'grid' ? (
             <div className="books-grid">
