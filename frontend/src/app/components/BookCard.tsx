@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, Edit3, Trash2, MoreVertical, Library } from 'lucide-react';
+import { Heart, Edit3, Trash2, MoreVertical, Library, BookOpen, Download } from 'lucide-react';
 import { SphaerusHeart, SphaerusLibrary } from './BrandIcons';
 import { BookType } from '../../types';
 
