@@ -62,12 +62,22 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.4s ease, color 0.4s ease;
-  
-  /* Futuristic Grid Background Pattern for Dark Mode */
+}
+
+[data-theme='dark'] body {
+  background-color: #010105;
   background-image: 
-    linear-gradient(rgba(24, 43, 73, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(24, 43, 73, 0.05) 1px, transparent 1px);
-  background-size: 30px 30px;
+    radial-gradient(ellipse at 50% -10%, rgba(0, 204, 255, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(24, 43, 73, 0.25) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+[data-theme='light'] body {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(ellipse at 50% -10%, rgba(2, 132, 199, 0.06) 0%, transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(241, 245, 249, 0.8) 0%, transparent 50%);
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
