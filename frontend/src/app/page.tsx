@@ -114,7 +114,7 @@ export default function Home() {
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isAnnotationsOpen, setIsAnnotationsOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -710,10 +710,10 @@ export default function Home() {
       )}
 
       {/* Mobile Sidebar Overlay */}
-      <div className={`mobile-overlay ${isMobileMenuOpen ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)} />
+      <div className={`mobile-overlay ${isSidebarOpen ? 'active' : ''}`} onClick={() => setIsSidebarOpen(false)} />
 
       {/* Sidebar */}
-      <aside className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`} style={{ zIndex: 1000 }}>
+      <aside className={`sidebar ${isSidebarOpen ? 'open mobile-open' : 'collapsed'}`} style={{ zIndex: 1000 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem', marginBottom: '2rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.25rem', fontWeight: 'bold' }}>
             <img 
@@ -726,11 +726,12 @@ export default function Home() {
             </span>
           </div>
           <button 
-            className="btn btn-icon hidden-desktop" 
-            onClick={() => setIsMobileMenuOpen(false)} 
+            className="btn btn-icon" 
+            onClick={() => setIsSidebarOpen(false)} 
             style={{ color: 'var(--text-secondary)', background: 'transparent', border: 'none', padding: 0 }}
+            title="Collapse Sidebar"
           >
-            <X size={24} />
+            <X size={20} />
           </button>
         </div>
         
@@ -921,9 +922,10 @@ export default function Home() {
 
         <header className="header" style={{ paddingBottom: '1rem' }}>
           <button 
-            className="btn btn-icon mobile-menu-btn" 
-            onClick={() => setIsMobileMenuOpen(true)}
-            style={{ marginRight: '0.5rem', background: 'transparent', border: 'none' }}
+            className="btn btn-icon" 
+            onClick={() => setIsSidebarOpen(prev => !prev)}
+            style={{ marginRight: '0.5rem', background: 'transparent', border: 'none', color: 'var(--text-primary)' }}
+            title="Toggle Sidebar Menu"
           >
             <Menu size={24} />
           </button>
