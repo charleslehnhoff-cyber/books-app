@@ -16,6 +16,8 @@ export type ShelfType = {
   id: string;
   name: string;
   order: number;
+  icon?: string;
+  color?: string;
 };
 
 export type UploadTask = {

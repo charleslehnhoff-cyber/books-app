@@ -27,6 +27,8 @@ export type ShelfType = {
   id: string;
   name: string;
   order: number;
+  icon?: string;
+  color?: string;
 };
 
 type UploadTask = {
@@ -123,6 +125,7 @@ export default function Home() {
   const [isDragOverShelf, setIsDragOverShelf] = useState<string | null>(null);
   const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [editingShelf, setEditingShelf] = useState<ShelfType | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [heroColor, setHeroColor] = useState('rgba(0, 204, 255, 0.4)');
@@ -768,11 +771,12 @@ export default function Home() {
               onDragOver={(e) => handleDragOver(e, shelf.id)}
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDropToShelf(e, shelf.id)}
+              style={{ borderLeft: shelf.color ? `3px solid ${shelf.color}` : 'none' }}
             >
-              <Book size={20} />
-              <span title={shelf.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{shelf.name}</span>
+              <span style={{ fontSize: '1.1rem', minWidth: '22px', textAlign: 'center' }}>{shelf.icon || '📚'}</span>
+              <span title={shelf.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, fontWeight: selectedShelf === shelf.id ? 600 : 400 }}>{shelf.name}</span>
               <div className="shelf-actions" style={{ display: 'flex', gap: '0.5rem' }}>
-                <span title="Rename Shelf" onClick={(e) => handleRenameShelf(shelf.id, shelf.name, e)} style={{ display: 'flex', cursor: 'pointer' }}>
+                <span title="Customize Shelf Style & Icon" onClick={(e) => { e.stopPropagation(); setEditingShelf(shelf); }} style={{ display: 'flex', cursor: 'pointer' }}>
                   <Settings size={14} className="shelf-action-icon" />
                 </span>
                 <span title="Delete Shelf" onClick={(e) => handleDeleteShelf(shelf.id, e)} style={{ display: 'flex', cursor: 'pointer' }}>
@@ -1458,6 +1462,93 @@ export default function Home() {
             getCoverUrl={getCoverUrl}
             formatTitle={formatTitle}
           />
+        )}
+
+        {/* Shelf Style & Icon Customization Modal */}
+        {editingShelf && (
+          <div className="modal-overlay" onClick={() => setEditingShelf(null)} style={{ zIndex: 1100 }}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '440px', flexDirection: 'column', padding: '1.5rem', gap: '1.25rem', boxShadow: '0 20px 50px rgba(0,0,0,0.6)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', color: 'var(--text-primary)' }}>Customize Shelf</h3>
+                <button className="btn btn-icon" onClick={() => setEditingShelf(null)} style={{ background: 'transparent', border: 'none', color: '#fff' }}><X size={18} /></button>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.4rem' }}>Shelf Name</label>
+                <input
+                  type="text"
+                  value={editingShelf.name}
+                  onChange={(e) => setEditingShelf({ ...editingShelf, name: e.target.value })}
+                  style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.95rem' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.4rem' }}>Choose Icon</label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0.5rem' }}>
+                  {['📚', '🚀', '🧠', '🎨', '⚡', '💼', '🔬', '💡', '🔥', '🏆', '🎧', '🌟'].map(icon => (
+                    <button
+                      key={icon}
+                      type="button"
+                      onClick={() => setEditingShelf({ ...editingShelf, icon })}
+                      style={{
+                        fontSize: '1.3rem',
+                        padding: '0.4rem',
+                        borderRadius: '6px',
+                        border: editingShelf.icon === icon ? '2px solid var(--accent)' : '1px solid var(--border-color)',
+                        background: editingShelf.icon === icon ? 'rgba(0, 204, 255, 0.15)' : 'var(--bg-secondary)',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {icon}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.4rem' }}>Accent Color Badge</label>
+                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
+                  {['#00ccff', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#6366f1'].map(color => (
+                    <div
+                      key={color}
+                      onClick={() => setEditingShelf({ ...editingShelf, color })}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        backgroundColor: color,
+                        cursor: 'pointer',
+                        border: editingShelf.color === color ? '3px solid #fff' : '2px solid transparent',
+                        boxShadow: editingShelf.color === color ? `0 0 12px ${color}` : 'none'
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                <button className="btn" style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }} onClick={() => setEditingShelf(null)}>Cancel</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={async () => {
+                    if (!editingShelf) return;
+                    try {
+                      await fetch(`/api/shelves/${editingShelf.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: editingShelf.name, icon: editingShelf.icon, color: editingShelf.color })
+                      });
+                      setShelves(shelves.map(s => s.id === editingShelf.id ? editingShelf : s));
+                      setEditingShelf(null);
+                    } catch (e) { console.error(e); }
+                  }}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </main>
     </div>
