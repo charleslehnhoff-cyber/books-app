@@ -749,14 +749,14 @@ export default function Home() {
       )}
 
       {/* TRUECAPTURE / GOOGLE WORKSPACE TOP NAVIGATION HEADER */}
-      <header className="header" style={{ width: '100%', minHeight: '64px', zIndex: 1000, flexShrink: 0, borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 1.25rem', gap: '1rem' }}>
+      <header className="header" style={{ width: '100%', minHeight: '64px', zIndex: 1000, flexShrink: 0, borderBottom: '1px solid var(--border-color)', backgroundColor: theme === 'dark' ? 'var(--bg-secondary)' : '#F6F8FC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 1.25rem', gap: '1rem' }}>
         
-        {/* FAR LEFT: [ ☰ Hamburger ]  [ 📷 Logo ] BOOKS  │ */}
+        {/* FAR LEFT: [ ☰ Hamburger ]  [ 📷 SphaerusLogo ] BOOKS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           <button 
             className="btn btn-icon" 
             onClick={() => setIsSidebarOpen(prev => !prev)}
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', padding: '0.5rem', borderRadius: '50%', cursor: 'pointer' }}
+            style={{ background: 'transparent', border: 'none', color: theme === 'dark' ? 'var(--text-primary)' : '#444746', padding: '0.5rem', borderRadius: '50%', cursor: 'pointer' }}
             title="Main Menu"
           >
             <Menu size={22} />
@@ -767,11 +767,9 @@ export default function Home() {
             <span style={{ 
               fontFamily: 'var(--font-primary), "Poppins", sans-serif', 
               fontSize: '1.35rem', 
-              fontWeight: 800, 
-              background: 'linear-gradient(135deg, #FFFFFF 0%, #00CCFF 100%)', 
-              WebkitBackgroundClip: 'text', 
-              WebkitTextFillColor: 'transparent', 
-              letterSpacing: '-0.03em' 
+              fontWeight: 700, 
+              color: theme === 'dark' ? '#FFFFFF' : '#1F1F1F',
+              letterSpacing: '-0.02em' 
             }}>
               BOOKS
             </span>
@@ -784,8 +782,8 @@ export default function Home() {
           style={{ 
             flex: 1, 
             maxWidth: '720px', 
-            height: '46px', 
-            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.07)' : '#E9EEF6', 
+            height: '48px', 
+            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#EAF1FB', 
             borderRadius: '24px', 
             border: 'none', 
             padding: '0 1.25rem', 
@@ -815,14 +813,14 @@ export default function Home() {
         </div>
 
         {/* FAR RIGHT: [ ❓ Help ]  [ ⚙️ Settings ]  [ ✦ Gemini AI ]  [ ⠿ Waffle ]  [ Ⓢ Avatar ] */}
-        <div className="header-actions" style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', flexShrink: 0 }}>
+        <div className="header-actions" style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', flexShrink: 0 }}>
           
           {/* Help Info Icon */}
           <button 
             className="btn btn-icon hidden-mobile" 
             onClick={() => setIsHelpOpen(prev => !prev)}
             title="Help & Knowledge Base"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: theme === 'dark' ? 'var(--text-secondary)' : '#444746', padding: '0.5rem', borderRadius: '50%' }}
           >
             <HelpCircle size={21} />
           </button>
@@ -832,23 +830,33 @@ export default function Home() {
             className="btn btn-icon hidden-mobile" 
             onClick={() => setIsSettingsOpen(prev => !prev)}
             title="App Settings"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: theme === 'dark' ? 'var(--text-secondary)' : '#444746', padding: '0.5rem', borderRadius: '50%' }}
           >
             <Settings size={21} />
           </button>
 
-          {/* Gemini Sphaerus AI Sparkles */}
+          {/* Gemini AI 4-Color Sparkle Star */}
           <button 
             className="btn btn-icon hidden-mobile" 
             onClick={() => setShowAnalytics(true)}
             title="Sphaerus AI Intelligence"
-            style={{ background: 'transparent', border: 'none', color: '#00CCFF', padding: '0.5rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', padding: '0.5rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
-            <Sparkles size={21} />
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#4285F4" />
+                  <stop offset="35%" stopColor="#9B51E0" />
+                  <stop offset="70%" stopColor="#EA4335" />
+                  <stop offset="100%" stopColor="#FBBC04" />
+                </linearGradient>
+              </defs>
+              <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z" fill="url(#geminiGrad)" />
+            </svg>
           </button>
 
           {/* Theme Switcher */}
-          <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme" style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}>
+          <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme" style={{ background: 'transparent', border: 'none', color: theme === 'dark' ? 'var(--text-secondary)' : '#444746', padding: '0.5rem', borderRadius: '50%' }}>
             {theme === 'dark' ? <Sun size={21} /> : <Moon size={21} />}
           </button>
 
@@ -857,23 +865,24 @@ export default function Home() {
             className="btn btn-icon" 
             onClick={() => setIsWaffleOpen(prev => !prev)}
             title="Sphaerus Suite Apps"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: theme === 'dark' ? 'var(--text-secondary)' : '#444746', padding: '0.5rem', borderRadius: '50%' }}
           >
             <Grid size={21} />
           </button>
 
-          {/* Sphaerus Corporate Avatar (S) with Gradient Ring */}
+          {/* Sphaerus Corporate Avatar with Rainbow Gradient Ring */}
           <div 
             title="Sphaerus Corporate Account"
             style={{ 
-              padding: '2px', 
+              padding: '2.5px', 
               borderRadius: '50%', 
-              background: 'linear-gradient(135deg, #00CCFF 0%, #3B82F6 50%, #8B5CF6 100%)', 
+              background: 'linear-gradient(135deg, #4285F4 0%, #EA4335 33%, #FBBC05 66%, #34A853 100%)', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center',
-              marginLeft: '0.3rem',
-              cursor: 'pointer'
+              marginLeft: '0.4rem',
+              cursor: 'pointer',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
             }}
           >
             <div 
@@ -881,7 +890,7 @@ export default function Home() {
                 width: '32px', 
                 height: '32px', 
                 borderRadius: '50%', 
-                backgroundColor: '#010105', 
+                backgroundColor: theme === 'dark' ? '#010105' : '#182B49', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center', 
