@@ -748,22 +748,22 @@ export default function Home() {
         </div>
       )}
 
-      {/* GOOGLE WORKSPACE ENTERPRISE HEADER SEQUENCE */}
+      {/* TRUECAPTURE / GOOGLE WORKSPACE TOP NAVIGATION HEADER */}
       <header className="header" style={{ width: '100%', minHeight: '64px', zIndex: 1000, flexShrink: 0, borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 1.25rem', gap: '1rem' }}>
         
-        {/* FAR LEFT: [ ☰ Hamburger ]  [ 📷 Logo ] BOOKS */}
+        {/* FAR LEFT: [ ☰ Hamburger ]  [ 📷 Logo ] BOOKS  │ */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           <button 
             className="btn btn-icon" 
             onClick={() => setIsSidebarOpen(prev => !prev)}
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', padding: '0.4rem', borderRadius: '50%', cursor: 'pointer' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', padding: '0.5rem', borderRadius: '50%', cursor: 'pointer' }}
             title="Main Menu"
           >
             <Menu size={22} />
           </button>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer' }} onClick={() => setSelectedShelf('all')}>
-            <SphaerusLogo size={34} />
+            <SphaerusLogo size={32} />
             <span style={{ 
               fontFamily: 'var(--font-primary), "Poppins", sans-serif', 
               fontSize: '1.35rem', 
@@ -783,30 +783,30 @@ export default function Home() {
           className="search-bar" 
           style={{ 
             flex: 1, 
-            maxWidth: '680px', 
-            height: '44px', 
-            backgroundColor: 'var(--bg-primary)', 
-            borderRadius: '28px', 
-            border: '1px solid var(--border-color)', 
-            padding: '0 1rem', 
+            maxWidth: '720px', 
+            height: '46px', 
+            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.07)' : '#E9EEF6', 
+            borderRadius: '24px', 
+            border: 'none', 
+            padding: '0 1.25rem', 
             display: 'flex', 
             alignItems: 'center', 
-            gap: '0.75rem', 
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            cursor: 'pointer'
+            gap: '0.85rem', 
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
           }} 
           onClick={() => setIsSearchOpen(true)}
         >
-          <Search size={20} color="var(--text-secondary)" />
-          <div style={{ color: 'var(--text-secondary)', flex: 1, fontSize: '0.95rem', fontWeight: 400 }}>Search books, authors, topics...</div>
+          <Search size={20} color={theme === 'dark' ? '#94A3B8' : '#444746'} />
+          <div style={{ color: theme === 'dark' ? '#94A3B8' : '#444746', flex: 1, fontSize: '0.95rem', fontWeight: 400 }}>Search books...</div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
             <span 
-              title="Filter Controls" 
+              title="Search Filters & Sliders" 
               onClick={(e) => { e.stopPropagation(); setIsSearchOpen(true); }}
-              style={{ display: 'flex', padding: '0.25rem', borderRadius: '50%', color: 'var(--text-secondary)' }}
+              style={{ display: 'flex', padding: '0.35rem', borderRadius: '50%', color: theme === 'dark' ? '#94A3B8' : '#444746', cursor: 'pointer' }}
             >
-              <SlidersHorizontal size={18} />
+              <SlidersHorizontal size={19} />
             </span>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
               <Command size={12} /> K
@@ -814,7 +814,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* FAR RIGHT: [ ❓ Help ]  [ ⚙️ Settings ]  [ ✦ AI Sparkles ]  [ ⠿ Waffle ]  [ Ⓢ Avatar ]  [ + Upload ] */}
+        {/* FAR RIGHT: [ ❓ Help ]  [ ⚙️ Settings ]  [ ✦ Gemini AI ]  [ ⠿ Waffle ]  [ Ⓢ Avatar ] */}
         <div className="header-actions" style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', flexShrink: 0 }}>
           
           {/* Help Info Icon */}
@@ -822,9 +822,9 @@ export default function Home() {
             className="btn btn-icon hidden-mobile" 
             onClick={() => setIsHelpOpen(prev => !prev)}
             title="Help & Knowledge Base"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.4rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}
           >
-            <HelpCircle size={20} />
+            <HelpCircle size={21} />
           </button>
 
           {/* Settings Cog Wheel */}
@@ -832,24 +832,24 @@ export default function Home() {
             className="btn btn-icon hidden-mobile" 
             onClick={() => setIsSettingsOpen(prev => !prev)}
             title="App Settings"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.4rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}
           >
-            <Settings size={20} />
+            <Settings size={21} />
           </button>
 
-          {/* Sphaerus AI Sparkles */}
+          {/* Gemini Sphaerus AI Sparkles */}
           <button 
             className="btn btn-icon hidden-mobile" 
             onClick={() => setShowAnalytics(true)}
             title="Sphaerus AI Intelligence"
-            style={{ background: 'rgba(0, 204, 255, 0.1)', border: '1px solid rgba(0, 204, 255, 0.3)', color: '#00CCFF', padding: '0.4rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: '#00CCFF', padding: '0.5rem', borderRadius: '50%' }}
           >
-            <Sparkles size={20} />
+            <Sparkles size={21} />
           </button>
 
           {/* Theme Switcher */}
-          <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme" style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.4rem', borderRadius: '50%' }}>
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          <button className="btn btn-icon hidden-mobile" onClick={toggleTheme} title="Toggle Theme" style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}>
+            {theme === 'dark' ? <Sun size={21} /> : <Moon size={21} />}
           </button>
 
           {/* Waffle Menu (9-Dots) App Suite Launcher */}
@@ -857,32 +857,41 @@ export default function Home() {
             className="btn btn-icon" 
             onClick={() => setIsWaffleOpen(prev => !prev)}
             title="Sphaerus Suite Apps"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.4rem', borderRadius: '50%' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', padding: '0.5rem', borderRadius: '50%' }}
           >
-            <Grid size={20} />
+            <Grid size={21} />
           </button>
 
-          {/* Sphaerus Corporate Avatar (S) */}
+          {/* Sphaerus Corporate Avatar (S) with Gradient Ring */}
           <div 
             title="Sphaerus Corporate Account"
             style={{ 
-              width: '34px', 
-              height: '34px', 
+              padding: '2px', 
               borderRadius: '50%', 
-              background: 'linear-gradient(135deg, #182B49 0%, #010105 100%)', 
-              border: '2px solid #00CCFF', 
+              background: 'linear-gradient(135deg, #00CCFF 0%, #3B82F6 50%, #8B5CF6 100%)', 
               display: 'flex', 
               alignItems: 'center', 
-              justifyContent: 'center', 
-              fontWeight: 800, 
-              color: '#00CCFF', 
-              fontSize: '0.9rem',
-              boxShadow: '0 0 10px rgba(0, 204, 255, 0.3)',
-              cursor: 'pointer',
-              marginLeft: '0.2rem'
+              justifyContent: 'center',
+              marginLeft: '0.3rem',
+              cursor: 'pointer'
             }}
           >
-            S
+            <div 
+              style={{ 
+                width: '32px', 
+                height: '32px', 
+                borderRadius: '50%', 
+                backgroundColor: '#010105', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                fontWeight: 800, 
+                color: '#00CCFF', 
+                fontSize: '0.9rem'
+              }}
+            >
+              S
+            </div>
           </div>
 
           <input 
