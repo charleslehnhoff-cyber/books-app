@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu, Download, Sparkles } from 'lucide-react';
 import { SphaerusLibrary, SphaerusHeart, SphaerusClock, SphaerusZap, SphaerusAward } from './components/BrandIcons';
+import SphaerusLogo from './components/SphaerusLogo';
 import Link from 'next/link';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import BookCard from './components/BookCard';
@@ -731,13 +732,17 @@ export default function Home() {
           <Menu size={24} />
         </button>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginRight: '0.5rem' }}>
-          <img 
-            src="/logo.png" 
-            alt="BOOKS Logo" 
-            style={{ width: '32px', height: '32px', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 0 10px rgba(0, 204, 255, 0.4)', border: '1px solid rgba(0, 204, 255, 0.3)' }} 
-          />
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginRight: '0.75rem' }}>
+          <SphaerusLogo size={34} />
+          <span style={{ 
+            fontFamily: 'var(--font-primary), "Poppins", sans-serif', 
+            fontSize: '1.35rem', 
+            fontWeight: 800, 
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #00CCFF 100%)', 
+            WebkitBackgroundClip: 'text', 
+            WebkitTextFillColor: 'transparent', 
+            letterSpacing: '-0.03em' 
+          }}>
             BOOKS
           </span>
         </div>
