@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, FileText, BookOpen, Maximize, LayoutGrid, List, Play, Square, Star, Bookmark, Download, Settings, Search, RotateCw, AlignJustify, X } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, FileText, BookOpen, Maximize, LayoutGrid, List, Play, Square, Star, Bookmark, Download, Settings, Search, RotateCw, AlignJustify, X, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import ArticleReaderModal from './ArticleReaderModal';
 import { useSearchParams } from 'next/navigation';
 
 // react-pdf
@@ -38,6 +39,7 @@ export default function Reader() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showUI, setShowUI] = useState(true);
   const [rotation, setRotation] = useState<number>(0);
+  const [showArticleReader, setShowArticleReader] = useState(false);
 
   // PDF State
   const [pdfDoc, setPdfDoc] = useState<any>(null);
@@ -808,8 +810,18 @@ export default function Reader() {
             </div>
           )}
 
-          {/* Read Aloud & Bookmark Action */}
+          {/* Article View, Read Aloud & Bookmark Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', backgroundColor: 'rgba(15, 23, 42, 0.8)', padding: '0.25rem', borderRadius: '0.5rem', border: '1px solid var(--bg-secondary)' }}>
+            <button
+              className="btn btn-icon"
+              style={{ backgroundColor: showArticleReader ? 'rgba(0, 204, 255, 0.2)' : 'transparent', color: showArticleReader ? 'var(--accent)' : '#fff', border: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.6rem' }}
+              onClick={() => setShowArticleReader(true)}
+              title="Smart Clean Article Extractor View"
+            >
+              <Sparkles size={18} color="var(--accent)" />
+              <span className="hidden-mobile" style={{ fontSize: '0.8rem', fontWeight: 600 }}>Article View</span>
+            </button>
+            <div style={{ width: '1px', height: '1.5rem', backgroundColor: 'var(--bg-secondary)', margin: '0 2px' }} />
             <button
               className={`btn btn-icon`}
               style={{ color: isPlaying ? 'var(--accent)' : '#fff', border: 'none' }}
@@ -819,7 +831,7 @@ export default function Reader() {
                 {isPlaying ? <Square size={18} fill="var(--accent)" /> : <Play size={18} />}
               </span>
             </button>
-            <div style={{ width: '1px', height: '1.5rem', backgroundColor: 'var(--bg-secondary)', margin: '0 4px' }} />
+            <div style={{ width: '1px', height: '1.5rem', backgroundColor: 'var(--bg-secondary)', margin: '0 2px' }} />
             <button
               className={`btn btn-icon`}
               style={{ color: isBookmarked ? '#eab308' : '#fff', border: 'none' }}
@@ -1355,6 +1367,15 @@ export default function Reader() {
             <ChevronRight size={18} />
           </button>
         </footer>
+      )}
+
+      {/* Smart Article Extractor & Clean Reader View Modal */}
+      {showArticleReader && (
+        <ArticleReaderModal
+          text={selection?.text || highlights?.[0]?.text || book?.title || 'Extracted page content ready for Bionic typography reading.'}
+          title={book?.title || 'Article View'}
+          onClose={() => setShowArticleReader(false)}
+        />
       )}
     </div>
   );
