@@ -1,6 +1,6 @@
 {
-  "name": "Just BOOKS",
-  "short_name": "BOOKS",
+  "name": "BOOK",
+  "short_name": "BOOK",
   "description": "A modern world-class e-reading application.",
   "start_url": "/",
   "display": "standalone",
