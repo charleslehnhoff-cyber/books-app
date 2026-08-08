@@ -117,6 +117,12 @@ export default function Home() {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isAnnotationsOpen, setIsAnnotationsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      setIsSidebarOpen(false);
+    }
+  }, []);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'shelf'>('shelf');
