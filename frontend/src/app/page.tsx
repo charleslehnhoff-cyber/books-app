@@ -1152,24 +1152,26 @@ export default function Home() {
             <div style={{ 
               marginBottom: '3rem', 
               borderRadius: '20px', 
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              border: theme === 'dark' ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(2, 132, 199, 0.18)',
               display: 'flex',
               gap: '2rem',
               alignItems: 'center',
-              boxShadow: `0 25px 70px ${heroColor}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`,
+              boxShadow: theme === 'dark' 
+                ? `0 25px 70px ${heroColor}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+                : '0 20px 45px rgba(15, 23, 42, 0.06), 0 4px 15px rgba(2, 132, 199, 0.08)',
               position: 'relative',
               overflow: 'hidden',
               backgroundImage: `url('${getCoverUrl(heroBook)}')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              transition: 'box-shadow 0.5s ease'
+              transition: 'all 0.5s ease'
             }}>
               <div style={{
                 position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
                 backdropFilter: 'blur(45px)',
                 background: theme === 'dark' 
-                  ? 'linear-gradient(110deg, #010105 0%, rgba(7, 13, 24, 0.92) 50%, rgba(1, 1, 5, 0.6) 100%)'
-                  : 'linear-gradient(110deg, #ffffff 0%, rgba(248, 250, 252, 0.92) 50%, rgba(255, 255, 255, 0.6) 100%)',
+                  ? 'linear-gradient(110deg, #010105 0%, rgba(7, 13, 24, 0.94) 50%, rgba(1, 1, 5, 0.7) 100%)'
+                  : 'linear-gradient(110deg, #FFFFFF 0%, rgba(248, 250, 252, 0.95) 50%, rgba(255, 255, 255, 0.88) 100%)',
                 zIndex: 0
               }} />
 
@@ -1185,13 +1187,26 @@ export default function Home() {
                     borderRadius: '16px',
                     background: `radial-gradient(circle, ${heroColor} 0%, transparent 70%)`,
                     filter: 'blur(20px)',
+                    opacity: theme === 'dark' ? 1 : 0.4,
                     zIndex: 0
                   }} />
                   <img 
                     src={getCoverUrl(heroBook)} 
                     alt={heroBook.title} 
                     className="hero-book-cover"
-                    style={{ position: 'relative', zIndex: 1, maxHeight: '220px', width: 'auto', maxWidth: '160px', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 20px 40px rgba(0,0,0,0.7)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    style={{ 
+                      position: 'relative', 
+                      zIndex: 1, 
+                      maxHeight: '220px', 
+                      width: 'auto', 
+                      maxWidth: '160px', 
+                      objectFit: 'contain', 
+                      borderRadius: '10px', 
+                      boxShadow: theme === 'dark' 
+                        ? '0 20px 40px rgba(0,0,0,0.7)' 
+                        : '0 16px 36px rgba(15, 23, 42, 0.18)', 
+                      border: theme === 'dark' ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)' 
+                    }}
                     onError={(e) => handleImageError(e, heroBook)}
                   />
                 </div>
