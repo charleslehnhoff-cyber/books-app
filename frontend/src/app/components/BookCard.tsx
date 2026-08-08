@@ -173,10 +173,21 @@ const BookCard = React.memo(({
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
               className="book-cover-image"
-              style={{ objectFit: 'contain', transition: 'transform 0.4s ease' }}
+              style={{ objectFit: 'contain', transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
               onError={(e) => handleImageError(e, book)}
               priority={priority}
             />
+            {/* 3D Realistic Book Spine & Page Edge Overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 3%, rgba(255,255,255,0.18) 5%, transparent 10%)',
+              pointerEvents: 'none',
+              zIndex: 3
+            }} />
           </div>
           
           <div className="book-checkbox" style={{ position: 'absolute', top: '0.5rem', left: '0.5rem', zIndex: 10 }}>

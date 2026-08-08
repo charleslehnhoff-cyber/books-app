@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu, Download } from 'lucide-react';
+import { Book, Library, Settings, Search, Plus, Moon, Sun, BookOpen, Trash2, MoreVertical, X, LayoutGrid, List, Play, Command, Heart, Edit3, BarChart2, UploadCloud, CheckCircle, FileText, Clock, Zap, Award, Filter, SortDesc, Flame, Menu, Download, Sparkles } from 'lucide-react';
 import { SphaerusLibrary, SphaerusHeart, SphaerusClock, SphaerusZap, SphaerusAward } from './components/BrandIcons';
 import Link from 'next/link';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -1026,16 +1026,16 @@ export default function Home() {
 
         <div className="content-area" style={{ flex: 1, overflowY: 'auto', padding: '0 2rem 2rem 2rem' }}>
           
-          {/* Cinematic Hero Banner */}
+          {/* Bespoke Editorial Hero Spotlight */}
           {heroBook && (
             <div style={{ 
               marginBottom: '3rem', 
-              borderRadius: '16px', 
-              border: '1px solid var(--border-color)',
+              borderRadius: '20px', 
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               display: 'flex',
               gap: '2rem',
               alignItems: 'center',
-              boxShadow: `0 10px 40px ${heroColor}`,
+              boxShadow: `0 25px 70px ${heroColor}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`,
               position: 'relative',
               overflow: 'hidden',
               backgroundImage: `url('${getCoverUrl(heroBook)}')`,
@@ -1045,33 +1045,52 @@ export default function Home() {
             }}>
               <div style={{
                 position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                backdropFilter: 'blur(40px)',
+                backdropFilter: 'blur(45px)',
                 background: theme === 'dark' 
-                  ? 'linear-gradient(to right, rgba(15,23,42,1) 0%, rgba(15,23,42,0.8) 50%, rgba(15,23,42,0.4) 100%)'
-                  : 'linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.4) 100%)',
+                  ? 'linear-gradient(110deg, #010105 0%, rgba(7, 13, 24, 0.92) 50%, rgba(1, 1, 5, 0.6) 100%)'
+                  : 'linear-gradient(110deg, #ffffff 0%, rgba(248, 250, 252, 0.92) 50%, rgba(255, 255, 255, 0.6) 100%)',
                 zIndex: 0
               }} />
 
-              <div className="hero-book-container" style={{ zIndex: 1, display: 'flex', gap: '2rem', alignItems: 'center', padding: '2.5rem', width: '100%' }}>
-                <img 
-                  src={getCoverUrl(heroBook)} 
-                  alt={heroBook.title} 
-                  className="hero-book-cover"
-                  style={{ width: '140px', height: '200px', objectFit: 'cover', borderRadius: '8px', boxShadow: '0 12px 24px rgba(0,0,0,0.5)', flexShrink: 0 }}
-                  onError={(e) => handleImageError(e, heroBook)}
-                />
+              <div className="hero-book-container" style={{ zIndex: 1, display: 'flex', gap: '2.5rem', alignItems: 'center', padding: '2.5rem 3rem', width: '100%' }}>
+                {/* Book Cover with Ambient Backlight Glow */}
+                <div style={{ position: 'relative', flexShrink: 0 }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    left: '-10px',
+                    right: '-10px',
+                    bottom: '-10px',
+                    borderRadius: '16px',
+                    background: `radial-gradient(circle, ${heroColor} 0%, transparent 70%)`,
+                    filter: 'blur(20px)',
+                    zIndex: 0
+                  }} />
+                  <img 
+                    src={getCoverUrl(heroBook)} 
+                    alt={heroBook.title} 
+                    className="hero-book-cover"
+                    style={{ position: 'relative', zIndex: 1, width: '150px', height: '215px', objectFit: 'cover', borderRadius: '10px', boxShadow: '0 20px 40px rgba(0,0,0,0.7)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    onError={(e) => handleImageError(e, heroBook)}
+                  />
+                </div>
+
                 <div className="hero-book-info" style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ color: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Continue Reading</div>
-                  <h2 className="hero-book-title" style={{ fontSize: '2.2rem', margin: '0 0 0.5rem 0', color: 'var(--text-primary)', textShadow: '0 2px 4px rgba(0,0,0,0.1)', lineHeight: 1.2 }}>{formatTitle(heroBook.title)}</h2>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginBottom: '0.5rem' }}>You left off on Page {heroBook.progress}.</div>
-                    <div style={{ width: '100%', maxWidth: '300px', background: 'rgba(255,255,255,0.2)', height: '6px', borderRadius: '3px', overflow: 'hidden', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2)' }}>
-                      <div style={{ width: `${heroBook.progressPercent || Math.min(100, Math.max(5, ((heroBook.progress || 0) / 300) * 100))}%`, height: '100%', background: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', borderRadius: '3px' }}></div>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent)', background: 'rgba(0, 204, 255, 0.1)', padding: '0.3rem 0.8rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.8rem', border: '1px solid rgba(0, 204, 255, 0.2)' }}>
+                    <Sparkles size={14} /> Editor's Spotlight • Continue Reading
+                  </div>
+                  <h2 className="hero-book-title" style={{ fontSize: '2.4rem', margin: '0 0 0.6rem 0', color: 'var(--text-primary)', textShadow: '0 2px 8px rgba(0,0,0,0.3)', lineHeight: 1.15, fontWeight: 800, letterSpacing: '-0.03em' }}>{formatTitle(heroBook.title)}</h2>
+                  
+                  <div style={{ marginBottom: '1.75rem' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '0.6rem', fontWeight: 500 }}>Currently at Page {heroBook.progress}</div>
+                    <div style={{ width: '100%', maxWidth: '320px', background: 'rgba(255,255,255,0.1)', height: '6px', borderRadius: '3px', overflow: 'hidden', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.3)' }}>
+                      <div style={{ width: `${heroBook.progressPercent || Math.min(100, Math.max(5, ((heroBook.progress || 0) / 300) * 100))}%`, height: '100%', background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%)', borderRadius: '3px', boxShadow: '0 0 10px var(--accent)' }}></div>
                     </div>
                   </div>
+
                   <Link href={`/read?id=${heroBook.id}`} style={{ textDecoration: 'none', display: 'inline-block' }}>
-                    <button className="btn btn-primary" style={{ padding: '0.75rem 2rem', fontSize: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center', backgroundColor: heroColor !== 'rgba(0, 204, 255, 0.4)' ? heroColor.replace('0.8)', '1)') : 'var(--accent)', border: 'none', boxShadow: `0 4px 12px ${heroColor}` }}>
-                      <Play size={18} fill="currentColor" /> Jump Back In
+                    <button className="btn btn-primary" style={{ padding: '0.85rem 2.2rem', fontSize: '0.95rem', fontWeight: 700, borderRadius: '10px', display: 'flex', gap: '0.6rem', alignItems: 'center', backgroundColor: 'var(--accent)', color: '#000', border: 'none', boxShadow: '0 8px 25px rgba(0, 204, 255, 0.4)', transition: 'transform 0.2s ease' }}>
+                      <Play size={18} fill="#000" /> Resume Reading
                     </button>
                   </Link>
                 </div>
