@@ -1,6 +1,6 @@
 {
-  "name": "BOOK",
-  "short_name": "BOOK",
+  "name": "BOOKS",
+  "short_name": "BOOKS",
   "description": "A modern world-class e-reading application.",
   "start_url": "/",
   "display": "standalone",
