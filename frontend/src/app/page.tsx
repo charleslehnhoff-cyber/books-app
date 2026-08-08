@@ -749,9 +749,9 @@ export default function Home() {
       )}
 
       {/* TRUECAPTURE / GOOGLE WORKSPACE TOP NAVIGATION HEADER */}
-      <header className="header" style={{ width: '100%', minHeight: '64px', zIndex: 1000, flexShrink: 0, borderBottom: '1px solid var(--border-color)', backgroundColor: theme === 'dark' ? 'var(--bg-secondary)' : '#F6F8FC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 1.25rem', gap: '1rem' }}>
+      <header className="header" style={{ width: '100%', minHeight: '64px', zIndex: 1000, flexShrink: 0, borderBottom: '1px solid var(--border-color)', backgroundColor: theme === 'dark' ? 'var(--bg-secondary)' : '#F6F8FC', display: 'grid', gridTemplateColumns: '260px 1fr auto', alignItems: 'center', padding: '0.5rem 1.25rem', gap: '1rem' }}>
         
-        {/* FAR LEFT: [ ☰ Hamburger ]  [ 📷 SphaerusLogo ] BOOKS */}
+        {/* FAR LEFT: [ ☰ Hamburger ]  [ 📷 SphaerusLogo ] Books */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           <button 
             className="btn btn-icon" 
@@ -776,44 +776,46 @@ export default function Home() {
           </div>
         </div>
 
-        {/* CENTER: [ 🔍 Search Bar Pill ... 🎛️ Filter Sliders ] */}
-        <div 
-          className="search-bar" 
-          style={{ 
-            flex: 1, 
-            maxWidth: '720px', 
-            height: '48px', 
-            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#EAF1FB', 
-            borderRadius: '24px', 
-            border: 'none', 
-            padding: '0 1.25rem', 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.85rem', 
-            cursor: 'pointer',
-            transition: 'all 0.2s ease'
-          }} 
-          onClick={() => setIsSearchOpen(true)}
-        >
-          <Search size={20} color={theme === 'dark' ? '#94A3B8' : '#444746'} />
-          <div style={{ color: theme === 'dark' ? '#94A3B8' : '#444746', flex: 1, fontSize: '0.95rem', fontWeight: 400 }}>Search books...</div>
-          
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <span 
-              title="Search Filters & Sliders" 
-              onClick={(e) => { e.stopPropagation(); setIsSearchOpen(true); }}
-              style={{ display: 'flex', padding: '0.35rem', borderRadius: '50%', color: theme === 'dark' ? '#94A3B8' : '#444746', cursor: 'pointer' }}
-            >
-              <SlidersHorizontal size={19} />
-            </span>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <Command size={12} /> K
+        {/* CENTER: Mathematically Dead-Centered Search Pill */}
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <div 
+            className="search-bar" 
+            style={{ 
+              width: '100%', 
+              maxWidth: '680px', 
+              height: '48px', 
+              backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#EAF1FB', 
+              borderRadius: '24px', 
+              border: 'none', 
+              padding: '0 1.25rem', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.85rem', 
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }} 
+            onClick={() => setIsSearchOpen(true)}
+          >
+            <Search size={20} color={theme === 'dark' ? '#94A3B8' : '#444746'} />
+            <div style={{ color: theme === 'dark' ? '#94A3B8' : '#444746', flex: 1, fontSize: '0.95rem', fontWeight: 400 }}>Search books...</div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <span 
+                title="Search Filters & Sliders" 
+                onClick={(e) => { e.stopPropagation(); setIsSearchOpen(true); }}
+                style={{ display: 'flex', padding: '0.35rem', borderRadius: '50%', color: theme === 'dark' ? '#94A3B8' : '#444746', cursor: 'pointer' }}
+              >
+                <SlidersHorizontal size={19} />
+              </span>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                <Command size={12} /> K
+              </div>
             </div>
           </div>
         </div>
 
         {/* FAR RIGHT: [ ❓ Help ]  [ ⚙️ Settings ]  [ ✦ Gemini AI ]  [ ⠿ Waffle ]  [ Ⓢ Avatar ] */}
-        <div className="header-actions" style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', flexShrink: 0 }}>
+        <div className="header-actions" style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', justifyContent: 'flex-end', flexShrink: 0 }}>
           
           {/* Help Info Icon */}
           <button 
